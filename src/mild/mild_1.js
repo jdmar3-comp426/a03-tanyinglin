@@ -42,8 +42,8 @@ export function maxAndMin(numbers) {
     var dict = {};
     var max = Math.max(...numbers);
     var min = Math.min(...numbers);
-    dict["min"] = min;
     dict["max"] = max;
+    dict["min"] = min;
     return dict;
 }
 
