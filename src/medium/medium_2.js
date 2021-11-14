@@ -69,23 +69,6 @@ export const allCarStats = {
  *     ]
  *}]
 
-  /* var makerhybrids = [];
-var models = [];
-for (const [index, element] of mpg_data.entries()) {
-    if (element["hybrid"]) {
-        var dict = {};
-        if (!(element["make"] in models)) {
-            var hybrids = [];
-            models.push(element["make"]);
-            dict["make"] = element["make"];
-            hybrids.push(element["id"]);
-            dict["hybrids"] = hybrids;
-            
-        }
-    }
-    
-} */
-
  /*
  *
  *
@@ -122,12 +105,10 @@ for (const [index, element] of mpg_data.entries()) {
 
 
 var yearsDict = {};
-const reducerCity = (elementP, elementN) => elementP["city_mpg"] + elementN["city_mpg"];
-const reducerHighway = (elementP, elementN) => elementP["highway_mpg"] + elementN["highway_mpg"];
 
 for (const [index, element] of mpg_data.entries()) {
     if(!(element["year"] in yearsDict)) {
-        // construct the dictionary for that year altogether?      
+        // construct the dictionary for that year altogether      
         var dict = {};
         //get hybrid and nothybrid cars for that specific year
         var yearAllCars = mpg_data.filter(car => car["year"] === element["year"]);
