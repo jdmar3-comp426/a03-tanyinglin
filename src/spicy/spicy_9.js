@@ -44,7 +44,8 @@ export const repeatDemo = () => {
  *   product of num1 and num2.
  */
 export const multiplyBy = (num1) => {
-
+    const another = (num2) => num1 * num2;
+    return another;
 };
 
 
@@ -52,7 +53,8 @@ export const multiplyBy = (num1) => {
  * Use the multiplyBy function to create and export a function named
  *   "tenTimes" that multiplies a number by 10.
  */
-export const tenTimes = undefined;
+ export const tenTimes = multiplyBy(10);
+ tenTimes(2);
 
 
 /**
@@ -88,7 +90,13 @@ export const tenTimesFifty = () => {
  *    everyEven([1, 1, 0, 1, 1], x => x === 1)  <--  returns false
  */
 export const everyEven = (arr, test) => {
-
+    var flag = true;
+    for(let i = 0; i < arr.length; i++){
+        if(i % 2 === 0){
+            flag = flag && test(arr[i]);
+        }
+    }
+    return flag;
 };
 
 
@@ -112,7 +120,13 @@ export const everyEven = (arr, test) => {
  *    someEven([0, 0, 0, 0, 0], x => x === 0)  <--  returns true
  */
 export const someEven = (arr, test) => {
-
+    var flag = false;
+    for(let i = 0; i < arr.length; i++){
+        if(i % 2 === 0){
+            flag = flag || test(arr[i]);
+        }
+    }
+    return flag;
 };
 
 
