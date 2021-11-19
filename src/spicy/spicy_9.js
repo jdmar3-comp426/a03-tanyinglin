@@ -162,8 +162,8 @@ export const filter = (arr, test) => {
             failed.push(arr[i]);
         }
     }
-    res["fail"] = failed;
     res["pass"] = passed;
+    res["fail"] = failed;
     return res;
 };
 
