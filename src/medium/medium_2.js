@@ -1,5 +1,7 @@
 import mpg_data from "./data/mpg_data.js";
-import {getStatistics} from "./medium_1.js";
+import {
+    getStatistics
+} from "./medium_1.js";
 
 /*
 This section can be done by using the array prototype functions.
@@ -19,10 +21,27 @@ see under the methods section
  *
  * @param {allCarStats.ratioHybrids} ratio of cars that are hybrids
  */
+var citySum = 0;
+var highwaySum = 0;
+var years = []
+var hybridCars = 0;
+for (const [index, element] of mpg_data.entries()) {
+    citySum += element["city_mpg"];
+    highwaySum += element["highway_mpg"];
+    years.push(element["year"]);
+    if (element["hybrid"]) {
+        hybridCars += 1;
+    }
+}
+
+
 export const allCarStats = {
-    avgMpg: undefined,
-    allYearStats: undefined,
-    ratioHybrids: undefined,
+    avgMpg: {
+        "city": citySum / mpg_data.length,
+        "highway": highwaySum / mpg_data.length
+    },
+    allYearStats: getStatistics(years),
+    ratioHybrids: hybridCars / mpg_data.length,
 };
 
 
@@ -49,8 +68,8 @@ export const allCarStats = {
  *       "2011 BMW ActiveHybrid 750Li Sedan"
  *     ]
  *}]
- *
- *
+
+ /*
  *
  *
  * @param {moreStats.avgMpgByYearAndHybrid} Object where keys are years and each year
@@ -83,7 +102,49 @@ export const allCarStats = {
  *
  * }
  */
+
+
+var yearsDict = {};
+
+for (const [index, element] of mpg_data.entries()) {
+    if(!(element["year"] in yearsDict)) {
+        // construct the dictionary for that year altogether      
+        var dict = {};
+        //get hybrid and nothybrid cars for that specific year
+        var yearAllCars = mpg_data.filter(car => car["year"] === element["year"]);
+        var yearHybrid = yearAllCars.filter(car => car["hybrid"] === true);
+        var yearNotHybrid = yearAllCars.filter(car => car["hybrid"] === false);
+        // get the citysum and highway sum
+        var hybridCity = yearHybrid.reduce(
+            (hybridCity, p) => hybridCity + p.city_mpg, 0
+        ) / yearHybrid.length;
+
+        var nothybridCity = yearNotHybrid.reduce(
+            (nothybridCity, p) => nothybridCity + p.city_mpg, 0
+        ) / yearNotHybrid.length;
+
+        var hybridHighway = yearHybrid.reduce(
+            (hybridHighway, p) => hybridHighway + p.highway_mpg, 0
+        ) / yearHybrid.length;
+
+        var nothybridHighway = yearNotHybrid.reduce(
+            (nothybridHighway, p) => nothybridHighway + p.highway_mpg, 0
+        ) / yearNotHybrid.length; 
+        
+        // fill in the dict
+        dict["hybrid"] = {
+            "city": hybridCity,
+            "highway": hybridHighway
+        }
+        dict["notHybrid"] = {
+            "city": nothybridCity,
+            "highway": nothybridHighway
+        }
+        yearsDict[element["year"]] = dict;
+    }
+}
+
 export const moreStats = {
-    makerHybrids: undefined,
-    avgMpgByYearAndHybrid: undefined
+    makerHybrids: [],
+    avgMpgByYearAndHybrid: yearsDict
 };
